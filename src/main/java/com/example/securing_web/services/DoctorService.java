@@ -5,6 +5,7 @@ import com.example.securing_web.entity.Doctor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +38,9 @@ public class DoctorService {
     return this.doctorRepository.findByName(name);
 
   }
-
+public List<Doctor> available(){
+    return this.doctorRepository.findByAvailableTrue();
+}
   public Optional<Doctor> findByEmail(String email){
     return this.doctorRepository.findByMail(email);
   }

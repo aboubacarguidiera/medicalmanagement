@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Docteurs Disponibles</title>
+</head>
+<body>
+<h1>Docteurs Disponibles</h1>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Nom</th>
+    <th>Email</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="doctor : ${availables}">
+    <td th:text="${doctor.id}">ID</td>
+    <td th:text="${doctor.name}">Nom</td>
+    <td th:text="${doctor.mail}">Email</td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

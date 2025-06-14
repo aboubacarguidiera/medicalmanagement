@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Médecins</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .dashboard-container {
+            padding: 20px;
+        }
+        .section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Clinique Médicale</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/doctors}">Médecins</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/patients}">Patients</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a th:href="@{/logout}" class="btn btn-outline-light">Déconnexion</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container dashboard-container">
+        <h2 class="mb-4">Gestion des Médecins</h2>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="section">
+                    <h3>Ajouter un médecin</h3>
+                    <form th:action="@{/admin/doctors/add}" th:object="${newDoctor}" method="post">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nom</label>
+                            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="mail" th:field="*{mail}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mdp" class="form-label">Mot de passe</label>
+                            <input type="password" class="form-control" id="mdp" th:field="*{mdp}" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="available" th:field="*{available}">
+                            <label class="form-check-label" for="available">Disponible</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus-circle"></i> Ajouter
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="section">
+                    <h3>Liste des médecins</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Disponible</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="doctor : ${doctors}">
+                                <td th:text="${doctor.id}">ID</td>
+                                <td th:text="${doctor.name}">Nom</td>
+                                <td th:text="${doctor.mail}">Email</td>
+                                <td>
+                                    <span th:if="${doctor.available}" class="badge bg-success">Oui</span>
+                                    <span th:unless="${doctor.available}" class="badge bg-danger">Non</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/admin/doctors/delete/{id}(id=${doctor.id})}"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce médecin?')">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

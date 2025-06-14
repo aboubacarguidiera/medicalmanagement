@@ -13,6 +13,7 @@ public class Doctor {
   private String name;
   private String mail;
   private String mdp;
+  private boolean available = false;
   @OneToMany(mappedBy = "doctor")
   private List<Consultation> consultations = new ArrayList<>(); ;
   public Doctor() {
@@ -22,6 +23,14 @@ public class Doctor {
     this.name = name;
     this.mail = mail;
     this.mdp = mdp;
+  }
+
+  public boolean isAvailable() {
+    return available;
+  }
+
+  public void setAvailable(boolean available) {
+    this.available = available;
   }
 
   public String getMdp() {

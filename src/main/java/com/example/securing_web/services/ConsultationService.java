@@ -32,4 +32,7 @@ public class ConsultationService {
     }
     return consultationRepository.save(consultation);
   }
+
+
+
 }

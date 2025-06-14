@@ -2,7 +2,7 @@ package com.example.securing_web.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Consultation {
@@ -10,20 +10,30 @@ public class Consultation {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String title;
-  private Date date;
+  private LocalDate date;
   @ManyToOne(fetch = FetchType.LAZY)
   private Patient patient;
   @ManyToOne(fetch = FetchType.LAZY)
   private Doctor doctor;
-
+  @Enumerated(EnumType.STRING)
+   private Status status;
   public Consultation() {
   }
 
-  public Consultation(String title, Date date, Patient patient, Doctor doctor) {
+  public Consultation(String title, LocalDate date, Patient patient, Doctor doctor) {
     this.title = title;
     this.date = date;
     this.patient = patient;
     this.doctor = doctor;
+    this.status = Status.PENDING;
+  }
+
+  public Status getStatus() {
+    return status;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
   }
 
   public Doctor getDoctor() {
@@ -54,11 +64,11 @@ public class Consultation {
     this.title = title;
   }
 
-  public Date getDate() {
+  public LocalDate getDate() {
     return date;
   }
 
-  public void setDate(Date date) {
+  public void setDate(LocalDate date) {
     this.date = date;
   }
 
